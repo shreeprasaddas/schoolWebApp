@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Search</title>
+    <style>/* styles.css */
+		#suggestions {
+			list-style-type: none;
+			padding: 0;
+		}
+		
+		#suggestions li {
+			cursor: pointer;
+			padding: 8px;
+		}
+		
+		#suggestions li:hover {
+			background-color: #f2f2f2;
+		}
+		</style>
+</head>
+<body>
+    <h1>Search</h1>
+    <input type="text" id="searchInput" placeholder="Search...">
+    <ul id="suggestions"></ul>
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script>// script.js
+		$(document).ready(function() {
+			$('#searchInput').on('input', function() {
+				var query = $(this).val();
+		
+				$.ajax({
+					url: '/search?q=' + query,
+					method: 'GET',
+					success: function(data) {
+						$('#suggestions').empty();
+						data.forEach(function(item) {
+							$('#suggestions').append('<li>' + item.name + '</li>');
+						});
+					},
+					error: function() {
+						console.error('Error fetching suggestions');
+					}
+				});
+			});
+		
+			$('#suggestions').on('click', 'li', function() {
+				var suggestion = $(this).text();
+				$('#searchInput').val(suggestion);
+				$('#suggestions').empty();
+			});
+		});
+		</script>
+</body>
+</html>
