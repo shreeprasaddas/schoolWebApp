@@ -35,4 +35,4 @@ const fobid= obid.obid;
 console.log(fobid);
 console.log(await makePayment(fobid,55000,'2025-5-9'));
 
-// export default makePayment;
+export default makePayment;
